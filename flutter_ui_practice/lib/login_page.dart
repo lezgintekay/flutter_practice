@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ui_practice/login_page_button.dart';
+import 'package:flutter_ui_practice/login_page_colors.dart';
+import 'package:flutter_ui_practice/login_page_text.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -12,83 +15,59 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
-        backgroundColor: const Color(0xff21254A),
+        backgroundColor: CustomColors.scaffoldBackgroundColor,
         body: SingleChildScrollView(
           child: Center(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  height: height * .25,
-                  decoration: const BoxDecoration(
-                      image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: AssetImage("assets/png/topImage.png"))),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        "Merhaba, \nHoşgeldin",
-                        style: TextStyle(
-                            fontSize: 30,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      spacerSizedBox(),
-                      TextField(
-                        decoration: customInputDecoration("Kullanıcı Adı"),
-                      ),
-                      spacerSizedBox(),
-                      TextField(
-                        decoration: customInputDecoration("Şifre"),
-                      ),
-                      spacerSizedBox(),
-                      Center(
-                        child: TextButton(
-                            onPressed: () {},
-                            child: Text(
-                              "Şifremi Unuttum",
-                              style: TextStyle(color: Colors.pink[200]),
-                            )),
-                      ),
-                      spacerSizedBox(),
-                      Center(
-                        child: TextButton(
-                          onPressed: () {},
-                          child: Container(
-                              height: 50,
-                              width: 150,
-                              margin: EdgeInsets.symmetric(horizontal: 60),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(50),
-                                  color: Color(0xff31274f)),
-                              child: const Center(
-                                child: Text(
-                                  "Giriş Yap",
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              )),
-                        ),
-                      ),
-                      spacerSizedBox(),
-                      Center(
-                        child: TextButton(
-                            onPressed: () {},
-                            child: Text(
-                              "Hesap Oluştur",
-                              style: TextStyle(color: Colors.pink[200]),
-                            )),
-                      ),
-                    ],
-                  ),
-                ),
+                ImageContainer(height: height),
+                columnPadding(),
               ],
             ),
-          ),
-        ));
+        ),),);
+  }
+
+  Padding columnPadding() {
+    return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      LoginPageText().welcomeText,
+                      style: welcomeTextStyle(),
+                    ),
+                    spacerSizedBox(),
+                    TextField(
+                      decoration: customInputDecoration(LoginPageText().hintTextUsername),
+                    ),
+                    spacerSizedBox(),
+                    TextField(
+                      decoration: customInputDecoration(LoginPageText().hintTextPass),
+                    ),
+                    spacerSizedBox(),
+                    Center(
+                      child: CustomTextButton(onPressed: (){}, buttonText: LoginPageText().forgotPassText),
+                    ),
+                    spacerSizedBox(),
+                    const Center(
+                      child: LoginTextButton(),
+                    ),
+                    spacerSizedBox(),
+                    Center(
+                      child: CustomTextButton(onPressed: (){}, buttonText: LoginPageText().signUpText ),
+                    ),
+                  ],
+                ),
+              );
+  }
+
+  TextStyle welcomeTextStyle() {
+    return const TextStyle(
+                          fontSize: 30,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold);
   }
 
   Widget spacerSizedBox() => const SizedBox(height: 20);
@@ -101,5 +80,25 @@ class _LoginPageState extends State<LoginPage> {
             borderSide: BorderSide(color: Colors.grey)),
         focusedBorder: const UnderlineInputBorder(
             borderSide: BorderSide(color: Colors.grey)));
+  }
+}
+
+class ImageContainer extends StatelessWidget {
+  const ImageContainer({
+    super.key,
+    required this.height,
+  });
+
+  final double height;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: height * .25,
+      decoration: const BoxDecoration(
+          image: DecorationImage(
+              fit: BoxFit.cover,
+              image: AssetImage("assets/png/topImage.png"))),
+    );
   }
 }
